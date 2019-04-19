@@ -13,8 +13,9 @@ import WeatherView from "./Weather.view";
 
 import WeatherCard from "./Common/WeatherCard";
 import WeatherLeadingWrap from './WeatherLedingWrap';
+import Spinner from '../Common/Spinner';
 
-const getSubtractionModule = (a, b) => Math.abs(Math.abs(a) - Math.abs(b));
+import { getSubtractionModule } from './utils';
 
 function Weather({ weatherList: { winning, leading } }) {
   return (
@@ -30,16 +31,6 @@ function Weather({ weatherList: { winning, leading } }) {
   );
 }
 
-const Spinner = () => (
-  <div className="Spinner">
-    <div className="loader">Loading...</div>
-  </div>
-);
-
-const withSpinnerWhileLoading = branch(
-  ({ weatherList }) => weatherList.length === 0,
-  renderComponent(Spinner)
-);
 
 export default compose(
   withState("weatherList", "setWeatherList", []),
@@ -95,5 +86,8 @@ export default compose(
       this.props.setWeatherList({...res, leading: res.leading.slice(1, 6)});
     }
   }),
-  withSpinnerWhileLoading
+  branch(
+    ({ weatherList }) => weatherList.length === 0,
+    renderComponent(Spinner)
+  )
 )(Weather);
