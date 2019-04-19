@@ -83,7 +83,7 @@ export default compose(
         bbox: "-158.1,-38.2,179.1,64.7,100"
       });
       const res = await this.props.getOptimalStations(list);
-      this.props.setWeatherList({...res, leading: res.leading.slice(1, 6)});
+      this.props.setWeatherList({...res, leading: res.leading.slice(1, 20)});
     }
   }),
   branch(
